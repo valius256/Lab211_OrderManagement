@@ -88,8 +88,8 @@ public class Main {
         }
     }
 
-    private void PrintFromFile() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+    private void PrintFromFileCustomer() {
+        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.USER) == true) {
             System.out.println("Save to File");
             customerManagement.printAll();
         } else {
@@ -182,7 +182,7 @@ public class Main {
                     SaveToFile();
                     break;
                 case Customer_PrintAll:
-                    PrintFromFile();
+                    PrintFromFileCustomer();
                     break;
 
                 case Product_PrintAll:

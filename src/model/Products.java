@@ -14,7 +14,7 @@ package model;
 public class Products implements Comparable<Products>{
 
     public final String ID_Format = "PXXX";
-    public final String ID_Pattern = "P\\d{3}";
+    public final String ID_Pattern = "P[\\d]{3}";
     private static int ENTITY_ATTRIBUTE_COUNT = 5;
 
     private String productID;

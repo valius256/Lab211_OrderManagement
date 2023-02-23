@@ -29,7 +29,7 @@ public class CustomersManagement extends DataManagement<Customers> {
 
     public static CustomersManagement getInstance() {
         return instance;
-    }   
+    }
 
 //    private List<Customers> customerList;
 //
@@ -47,26 +47,26 @@ public class CustomersManagement extends DataManagement<Customers> {
             for (Customers customers : entityList) {
                 if (cID.equalsIgnoreCase(customers.getCustomerID())) {
                     return customers;
-                }
+                }   
             }
         }
         return null;
     }
 
-    public  Customers createCustomer() {
-        Customers customer = new Customers();
-        customer.input();
-
-        // check exists
-        if (getCustomersByID(customer.getCustomerID()) == null) {
-            if (this.entityList.add(customer)) {
-                return customer;
-            }
-        } else {
-            System.out.println("This Customer already exists.");
-        }
-        return null;
-    }
+//    public Customers createCustomer() {
+//        Customers customer = new Customers();
+//        customer.input();
+//
+//        // check exists
+//        if (getCustomersByID(customer.getCustomerID()) == null) {
+//            if (this.entityList.add(customer)) {
+//                return customer;
+//            }
+//        } else {
+//            System.out.println("This Customer already exists.");
+//        }
+//        return null;
+//    }
 
     public Customers addNewCustomers() {
         String CustomerID = Customers.inputId();
@@ -138,7 +138,6 @@ public class CustomersManagement extends DataManagement<Customers> {
 //        return c;
 //
 //    }
-
     public void printAll() {
         for (Customers customers : entityList) {
             System.out.println(customers);
@@ -199,7 +198,6 @@ public class CustomersManagement extends DataManagement<Customers> {
         }
     }
 
-
 //    public static void printDataFromFile() {
 //        try {
 //            File f = new File("customer.txt");
@@ -223,16 +221,19 @@ public class CustomersManagement extends DataManagement<Customers> {
 //          
 //     }
     public void search() {
+
         String FindID = Util.inputString("Enter the customerID you want to find: ", true);
-        for (Customers customers : entityList) {
-            if (customers.getCustomerID().equals(FindID)) {
-                System.out.println(customers);
-                System.out.println("Success");
-            } else {
-                System.out.println("Not Found");
+        if (getCustomersByID(FindID) != null) {
+            for (Customers customers : entityList) {
+                if (customers.getCustomerID().equalsIgnoreCase(FindID.toUpperCase())) {
+                    System.out.println(customers);
+                    System.out.println("Success");
+                }
             }
+        }else {
+            System.out.println("Error");
         }
-        System.out.println("Error");
+
     }
 
 //    public void SaveToFile() {
@@ -261,7 +262,6 @@ public class CustomersManagement extends DataManagement<Customers> {
 //        }
 //        System.out.println("Success");
 //    }
-
     private Customers checkDuplicateCustomer(String customerId) {
         for (Customers c : entityList) {
             if (c.getCustomerID().equals(customerId)) {

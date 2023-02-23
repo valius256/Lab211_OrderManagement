@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/semester3/lab211/OrderManagement/src/model/Products.java</file>
+            <file>file:/D:/semester3/lab211/OrderManagement/src/utils/CustomerValidation.java</file>
             <file>file:/D:/semester3/lab211/OrderManagement/src/Services/FileDataService.java</file>
             <file>file:/D:/semester3/lab211/OrderManagement/src/Services/ProductManagement.java</file>
             <file>file:/D:/semester3/lab211/OrderManagement/src/Main/MenuItem.java</file>
@@ -19,6 +20,7 @@
             <file>file:/D:/semester3/lab211/OrderManagement/src/model/User.java</file>
             <file>file:/D:/semester3/lab211/OrderManagement/src/Services/CustomersManagement.java</file>
             <file>file:/D:/semester3/lab211/OrderManagement/src/Services/DataManagement.java</file>
+            <file>file:/D:/semester3/lab211/OrderManagement/src/model/IObject.java</file>
             <file>file:/D:/semester3/lab211/OrderManagement/src/Services/UserManagetment.java</file>
         </group>
     </open-files>

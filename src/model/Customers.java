@@ -16,7 +16,7 @@ import utils.Util;
 public class Customers implements Comparable<Customers> {
 
     private static final String ID_Format = "CXXX";
-    private static final String ID_Pattern = "C\\d{3}";
+    private static final String ID_Pattern = "C[\\d]{3}";
     private static int ENTITY_ATTRIBUTE_COUNT = 4;
 
     private String customerID;
@@ -48,11 +48,10 @@ public class Customers implements Comparable<Customers> {
         return customerID;
     }
 
-    public void setCustomerID(String customerID) {
-        if ((customerID.matches("[C]+\\d{3}"))) {
+    public void setCustomerID(String customerID) throws Exception{
+        if ((customerID.matches("C[+\\d]{3}"))) {
             this.customerID = customerID;
         }
-        return;
     }
 
     public String getCustomerName() {
@@ -60,7 +59,10 @@ public class Customers implements Comparable<Customers> {
     }
 
     public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+        if (CustomersManagement.getInstance().getCustomersByID(customerName) != null) {
+            this.customerName = customerName;
+        }
+
     }
 
     public String getCustomerAddress() {
@@ -68,6 +70,9 @@ public class Customers implements Comparable<Customers> {
     }
 
     public void setCustomerAddress(String customerAddress) {
+        if (customerAddress.isEmpty()) {
+
+        }
         this.customerAddress = customerAddress;
     }
 
@@ -76,28 +81,16 @@ public class Customers implements Comparable<Customers> {
     }
 
     public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+        if (customerPhone.length() >= 10 && customerPhone.length() <= 12) {
+            this.customerPhone = customerPhone;
+        }
     }
 
     public void input() {
+   
         while (true) {
-            try {
-                setCustomerID(Util.inputString("Input id with patern (" + Customers.ID_Format + ")", false));
-                if (customerID == null) {
-                    throw new Exception();
-                }
-                break;
-            } catch (Exception ex) {
-                Logger.getLogger(Customers.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        while (true) {
-            try {
-                setCustomerName(Util.inputString("Enter name", false));
-                if (customerName == null) {
-                    throw new Exception();
-                }
+            try { 
+                setCustomerName(Util.inputString("Enter name", false).toUpperCase().trim());
                 break;
             } catch (Exception ex) {
                 System.out.println("Name must not be null ");
@@ -106,10 +99,7 @@ public class Customers implements Comparable<Customers> {
 
         while (true) {
             try {
-                setCustomerAddress(Util.inputString("Enter Address: ", false));
-                if (customerAddress == null) {
-                    throw new Exception();
-                }
+                setCustomerAddress(Util.inputString("Enter Address: ", false).toUpperCase().trim());
                 break;
             } catch (Exception e) {
                 System.out.println("Address must not be null ");
@@ -118,27 +108,22 @@ public class Customers implements Comparable<Customers> {
 
         while (true) {
             try {
-                setCustomerPhone(Util.inputString("Enter Phone: ", false));
+                setCustomerPhone(Util.inputString("Enter Phone: ", false).toUpperCase().trim());
                 break;
             } catch (Exception e) {
                 System.out.println("Phone must be in 10 to 12");
             }
         }
-        
-        if (CustomersManagement.getInstance().getCustomersByID(this.getCustomerID()) == null) {
-            System.out.println("Customer not found, add one.");
-        }
 
     }
-    
-     public static String inputId() {
+
+    public static String inputId() {
         String id = null;
         do {
             id = Util.inputString("Input id with patern (" + Customers.ID_Format + ")", false);
         } while (!Util.validateStringPattern(id, Customers.ID_Pattern, true));
         return id;
     }
-
 
     @Override
     public String toString() {

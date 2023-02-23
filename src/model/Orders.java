@@ -16,7 +16,7 @@ import utils.Util;
 public class Orders implements Comparable<Orders> {
 
     private static final String ID_Format = "DXXX";
-    private static final String ID_Pattern = "D\\d{3}";
+    private static final String ID_Pattern = "D[\\d]{3}";
     private static int ENTITY_ATTRIBUTE_COUNT = 6;
 
     private String orderID;
@@ -54,7 +54,9 @@ public class Orders implements Comparable<Orders> {
     }
 
     public void setOrderID(String orderID) {
-        this.orderID = orderID;
+        if (orderID.matches(ID_Format)) {
+            this.orderID = orderID;
+        }
     }
 
     public String getCustomerID() {
@@ -62,7 +64,9 @@ public class Orders implements Comparable<Orders> {
     }
 
     public void setCustomerID(String customerID) {
-        this.customerID = customerID;
+        if (CustomersManagement.getInstance().getCustomersByID(customerID) != null) {
+            this.customerID = customerID;
+        }
     }
 
     public String getProductID() {
@@ -70,7 +74,9 @@ public class Orders implements Comparable<Orders> {
     }
 
     public void setProductID(String productID) {
-        this.productID = productID;
+        if (ProductManagement.getInstance().getProductById(productID) != null) {
+            this.productID = productID;
+        }
     }
 
     public int getOrderQuantity() {
@@ -78,7 +84,9 @@ public class Orders implements Comparable<Orders> {
     }
 
     public void setOrderQuantity(int orderQuantity) {
-        this.orderQuantity = orderQuantity;
+        if (orderQuantity >= 0) {
+            this.orderQuantity = orderQuantity;
+        }
     }
 
     public String getOrderDate() {
@@ -86,6 +94,9 @@ public class Orders implements Comparable<Orders> {
     }
 
     public void setOrderDate(String orderDate) {
+        if(orderDate.isEmpty()){
+            
+        }
         this.orderDate = orderDate;
     }
 
@@ -94,7 +105,8 @@ public class Orders implements Comparable<Orders> {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        if(status.equalsIgnoreCase("true") || status.equalsIgnoreCase("false"))
+            this.status = status;
     }
 
     public void input() {
@@ -238,23 +250,20 @@ public class Orders implements Comparable<Orders> {
                 setOrderQuantity(Integer.parseInt(newOrdersQuantity));
             }
         } while (cont);
-        
-        
-        do {            
+
+        do {
             String newOrderDate = Util.inputString("Input new newOrderDate(mm/dd/yyyy):", false);
             if (newOrderDate.equals("")) {
-                
-            }else {
-                if(utils.OrderValidation.checkOrderDate(newOrderDate) == false){
+
+            } else {
+                if (utils.OrderValidation.checkOrderDate(newOrderDate) == false) {
                     cont = true;
                 }
                 setOrderDate(newOrderDate);
             }
         } while (cont);
-        
-        
-        
-        do {            
+
+        do {
             String newOrdersStatus = Util.inputString("Input new ordersQuantity:", true);
             if (newOrdersStatus.equals("")) {
             } else {
