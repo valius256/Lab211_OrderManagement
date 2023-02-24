@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Customers;
 
 import model.Customers;
 
@@ -47,7 +48,7 @@ public class CustomersManagement extends DataManagement<Customers> {
             for (Customers customers : entityList) {
                 if (cID.equalsIgnoreCase(customers.getCustomerID())) {
                     return customers;
-                }   
+                }
             }
         }
         return null;
@@ -67,7 +68,6 @@ public class CustomersManagement extends DataManagement<Customers> {
 //        }
 //        return null;
 //    }
-
     public Customers addNewCustomers() {
         String CustomerID = Customers.inputId();
         Customers customer = getCustomersByID(CustomerID);
@@ -230,7 +230,7 @@ public class CustomersManagement extends DataManagement<Customers> {
                     System.out.println("Success");
                 }
             }
-        }else {
+        } else {
             System.out.println("Error");
         }
 

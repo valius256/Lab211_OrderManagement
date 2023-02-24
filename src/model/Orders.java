@@ -178,7 +178,7 @@ public class Orders implements Comparable<Orders> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(orderID).append(",");;
+        sb.append(orderID).append(",");
         sb.append(customerID).append(",");
         sb.append(productID).append(",");
         sb.append(orderQuantity).append(",");

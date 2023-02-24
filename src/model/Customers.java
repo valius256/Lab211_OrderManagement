@@ -4,9 +4,6 @@
  */
 package model;
 
-import Services.CustomersManagement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utils.Util;
 
 /**
@@ -28,7 +25,6 @@ public class Customers implements Comparable<Customers> {
         StringBuilder sb = new StringBuilder();
         sb.append("ID");
         sb.append(",").append("NAME");
-        sb.append(",").append("QUANTITY");
         sb.append(",").append("Address");
         sb.append(",").append("Phone");
         return sb.toString();
@@ -59,9 +55,7 @@ public class Customers implements Comparable<Customers> {
     }
 
     public void setCustomerName(String customerName) {
-        if (CustomersManagement.getInstance().getCustomersByID(customerName) != null) {
-            this.customerName = customerName;
-        }
+        this.customerName = customerName;
 
     }
 
@@ -70,9 +64,6 @@ public class Customers implements Comparable<Customers> {
     }
 
     public void setCustomerAddress(String customerAddress) {
-        if (customerAddress.isEmpty()) {
-
-        }
         this.customerAddress = customerAddress;
     }
 
@@ -128,12 +119,10 @@ public class Customers implements Comparable<Customers> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Customer{");
-        sb.append("id=").append(customerID);
-        sb.append(", name=").append(customerName);
-        sb.append(", address=").append(customerAddress);
-        sb.append(", phone=").append(customerPhone);
-        sb.append('}');
+        sb.append(customerID).append(",");
+        sb.append(customerName).append(",");
+        sb.append(customerAddress).append(",");
+        sb.append(customerPhone).append(",");
         return sb.toString();
     }
 

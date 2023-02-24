@@ -89,13 +89,11 @@ public class Products implements Comparable<Products>{
      @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Products{");
-        sb.append("productID=").append(productID);
-        sb.append(", productName=").append(productName);
-        sb.append(", unit=").append(unit);
-        sb.append(", origin=").append(origin);
-        sb.append(", price=").append(price);
-        sb.append('}');
+        sb.append(productID).append(",");
+        sb.append(productName).append(",");
+        sb.append(unit).append(",");
+        sb.append(origin).append(",");
+        sb.append(price).append(",");
         return sb.toString();
     }
 
@@ -104,7 +102,6 @@ public class Products implements Comparable<Products>{
         if (entityString != null) {
             String[] attributes = entityString.split(",", -1);
             if (attributes.length >= Products.ENTITY_ATTRIBUTE_COUNT) {
-                
                 setProductID(attributes[0]);
                 setProductName(attributes[1]);
                 setUnit(attributes[2]);
