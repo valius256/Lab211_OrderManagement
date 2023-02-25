@@ -51,8 +51,12 @@ public class Main {
         }
     }
 
+    private boolean isAdmin() {
+        return UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN);
+    }
+
     private void addCustomer() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             System.out.println("Add new Customer: ");
             Customers c = customerManagement.addNewCustomers();
         } else {
@@ -61,7 +65,7 @@ public class Main {
     }
 
     private void updateCustomerByID() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             System.out.println("Update information");
             customerManagement.updateCustomer();
         } else {
@@ -71,7 +75,7 @@ public class Main {
     }
 
     private void searchCustomerByID() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             System.out.println("Search information");
             customerManagement.search();
         } else {
@@ -80,7 +84,7 @@ public class Main {
     }
 
     private void SaveToFile() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             System.out.println("Save to File");
             customerManagement.saveData();
         } else {
@@ -103,7 +107,7 @@ public class Main {
             System.out.println("Print all product in product.txt");
             productManagement.PrintAll();
         }
-        
+
     }
 
 //    //order
@@ -117,7 +121,7 @@ public class Main {
     }
 
     private void createNewOrder() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             Orders orders = this.orderManagement.addOrders();
         } else {
             System.out.println("Dont have permission need Admin role");
@@ -125,7 +129,7 @@ public class Main {
     }
 
     private void deleteOrders() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             System.out.println("Delete the orders");
             orderManagement.delete();
             OrderManagement.getInstace().saveData();
@@ -142,7 +146,7 @@ public class Main {
     }
 
     private void saveToFile() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             System.out.println("Save to file");
             orderManagement.saveData();
         } else {
@@ -152,7 +156,7 @@ public class Main {
     }
 
     private void updateOrders() {
-        if (UserManagetment.getInstance().getCurrentUser().checkRole(UserRole.ADMIN) == true) {
+        if (isAdmin()) {
             System.out.println("Update");
             orderManagement.update();
             orderManagement.saveData();

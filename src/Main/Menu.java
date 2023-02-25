@@ -4,6 +4,8 @@
  */
 package Main;
 
+import Services.UserManagetment;
+import model.User;
 import utils.Util;
 
 /**
@@ -74,18 +76,29 @@ public class Menu {
         }
         int numItems = showOptionMenu(menuCaption, optionList);
         int choice = Util.inputInteger("Please enter your choice", 0, numItems - 1);
-
+        User currentUser = UserManagetment.getInstance().getCurrentUser();
+        for (MenuItem menuItem : optionList) {
+            for (MenuItem item : optionList) {
+                    if (currentUser.checkRole(item.getRole())) {
+                    if (choice == 0) {
+                        return item;
+                    }
+                    choice--;
+                    }
+                }
+                return optionList[0];
+        }
         return optionList[choice];
-        //        UserController userController = Singleton.getInstance(UserController.class);
-        //        for (MenuItem item : optionList) {
-        ////            if (userController.checkCurrentUserRole(item.getRole())) {
-        //            if (choice == 0) {
-        //                return item;
-        //            }
-        //            choice--;
-        ////            }
-        //        }
-        //        return optionList[0];
+//                UserController userController = Singleton.getInstance(UserController.class);
+//                for (MenuItem item : optionList) {
+//        //            if (userController.checkCurrentUserRole(item.getRole())) {
+//                    if (choice == 0) {
+//                        return item;
+//                    }
+//                    choice--;
+//        //            }
+//                }
+//                return optionList[0];
     }
 
     private int showOptionMenu(String menuCaption, MenuItem[] optionList) {

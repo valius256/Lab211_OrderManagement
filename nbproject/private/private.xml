@@ -2,26 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/model/Products.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/utils/CustomerValidation.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Services/FileDataService.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Services/ProductManagement.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Main/MenuItem.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Main/Menu.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/utils/OrderValidation.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Services/OrderManagement.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Main/Main.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/model/Customers.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/utils/Util.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Main/UserRole.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Services/IDatabaseService.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/model/Orders.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/model/User.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Services/CustomersManagement.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Services/DataManagement.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/model/IObject.java</file>
-            <file>file:/D:/semester3/lab211/OrderManagement/src/Services/UserManagetment.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
