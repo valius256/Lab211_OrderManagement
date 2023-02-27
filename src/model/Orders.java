@@ -13,7 +13,7 @@ import utils.Util;
  *
  * @author Quang Phat
  */
-public class Orders implements Comparable<Orders> {
+public class Orders {
 
     private static final String ID_Format = "DXXX";
     private static final String ID_Pattern = "D[\\d]{3}";
@@ -330,18 +330,6 @@ public class Orders implements Comparable<Orders> {
 //        }
 //
 //    }
-    public static Comparator compNameAsc = new Comparator() {
-        @Override
-        public int compare(Object o1, Object o2) {
-            Orders b1 = (Orders) o1;
-            Orders b2 = (Orders) o2;
-            return b1.getCustomerID().compareTo(b2.getCustomerID());
 
-        }
-    };
 
-    @Override
-    public int compareTo(Orders o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
