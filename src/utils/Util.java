@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class Util {
 
     public static final String SEP = ",";
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
+    public static final String DATE_FORMAT = "MM/dd/yyyy";
     private static final String IGNORE_CASE_PATTERN = "(?i)";
 
     public static int inputInteger(String message, int minValue, int maxValue) {
@@ -84,7 +84,7 @@ public class Util {
         Scanner sc = new Scanner(System.in);
         Date date = null;
         do {
-            System.out.print(message + "(" + Util.DATE_FORMAT + "): ");
+            System.out.print(message + "(" + Util.DATE_FORMAT + "): "); // format thang/ ngay / nam 
             try {
                 date = toDate(sc.nextLine());
             } catch (ParseException ex) {
@@ -94,7 +94,6 @@ public class Util {
         return date;
     }
 
-   
     public static String inputStringWithSize(String message, int min, int max) {
         Scanner sc = new Scanner(System.in);
         String str = "";
@@ -136,5 +135,37 @@ public class Util {
             }
         } while (flag);
         return ret;
+    }
+
+    public static String toString(Date date) {
+        if (date == null) {
+            return "";
+        }
+        SimpleDateFormat df = new SimpleDateFormat(Util.DATE_FORMAT);
+        return df.format(date);
+    }
+
+    public static Date inputDate(String message, boolean allowEmpty) {
+        Scanner sc = new Scanner(System.in);
+        Date date = null;
+        do {
+            System.out.print(message + "(" + Util.DATE_FORMAT + "): ");
+            try {
+                date = toDate(sc.nextLine());
+            } catch (ParseException ex) {
+
+            }
+        } while (date == null & !allowEmpty);
+        return date;
+    }
+
+    public static boolean inputBoolean(String message) {
+        Scanner sc = new Scanner(System.in);
+        String res = "";
+        do {
+            System.out.print(message + ": ");
+            res = sc.nextLine();
+        } while (!res.trim().toLowerCase().startsWith("t") && !res.trim().toLowerCase().startsWith("f"));
+        return res.trim().toLowerCase().startsWith("t");
     }
 }

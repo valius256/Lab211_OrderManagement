@@ -1,6 +1,6 @@
 package model;
 
-import Main.UserRole;
+import OrderManagement.UserRole;
 import utils.Util;
 
 
@@ -8,7 +8,7 @@ import utils.Util;
  *
  * @author hasu
  */
-public class User implements IObject {
+public class User {
 
     private static final int ATTRIBUTE_COUNT = 3;
 
@@ -85,7 +85,6 @@ public class User implements IObject {
         return idx;
     }
 
-    @Override
     public void output() {
         StringBuilder sb = new StringBuilder();
         sb.append("\t{User: ");

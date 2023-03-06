@@ -1,20 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+
+import utils.Util;
 
 /**
  *
- * @author Quang Phat
+ * @author Minh Tri
  *
  */
-//<productID, productName, unit,
-//origin, price>
-public class Products implements Comparable<Products>{
+public class Products {
 
     public final String ID_Format = "PXXX";
-    public final String ID_Pattern = "P[\\d]{3}";
+    public final String ID_Pattern = "P\\{3}";
     private static int ENTITY_ATTRIBUTE_COUNT = 5;
 
     private String productID;
@@ -25,25 +21,15 @@ public class Products implements Comparable<Products>{
     
       public static String getAttributesHeader() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Products");
-        sb.append(",").append("productID");
-        sb.append(",").append("productName");
-        sb.append(",").append("unit");
-        sb.append(",").append("origin");
-        sb.append(",").append("price");
+        sb.append("productID");
+        sb.append(Util.SEP).append("productName");
+        sb.append(Util.SEP).append("unit");
+        sb.append(Util.SEP).append("origin");
+        sb.append(Util.SEP).append("price");
         return sb.toString();
     }
     
-    
     public Products() {
-    }
-
-    public Products(String productID, String productName, String unit, String origin, double price) {
-        this.productID = productID;
-        this.productName = productName;
-        this.unit = unit;
-        this.origin = origin;
-        this.price = price;
     }
 
     public String getProductID() {
@@ -89,18 +75,17 @@ public class Products implements Comparable<Products>{
      @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(productID).append(",");
-        sb.append(productName).append(",");
-        sb.append(unit).append(",");
-        sb.append(origin).append(",");
-        sb.append(price).append(",");
+        sb.append(productID);
+        sb.append(Util.SEP).append(productName);
+        sb.append(Util.SEP).append(unit);
+        sb.append(Util.SEP).append(origin);
+        sb.append(Util.SEP).append(price);
         return sb.toString();
     }
 
     public void parseProduct(String entityString) throws Exception {
-        // can check so luong attribute  (id, name, price, quantity, publisherId, status)
         if (entityString != null) {
-            String[] attributes = entityString.split(",", -1);
+            String[] attributes = entityString.split(Util.SEP, -1);
             if (attributes.length >= Products.ENTITY_ATTRIBUTE_COUNT) {
                 setProductID(attributes[0]);
                 setProductName(attributes[1]);
@@ -113,10 +98,5 @@ public class Products implements Comparable<Products>{
                 }
             }
         }
-    }
-
-    @Override
-    public int compareTo(Products o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

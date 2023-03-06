@@ -1,52 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-import Services.CustomersManagement;
-import Services.ProductManagement;
-import java.util.Comparator;
-import utils.Util;
+import java.util.ArrayList;
+import services.CustomersService;
+import utils.*;
+import services.ProductService;
+import java.util.Date;
+import java.util.List;
+import services.OrderService;
 
 /**
  *
- * @author Quang Phat
+ * @author Minh Tri
  */
 public class Orders {
 
-    private static final String ID_Format = "DXXX";
-    private static final String ID_Pattern = "D[\\d]{3}";
+        private static final String ID_FORMAT = "DXXX";
+    private static final String ID_PATTERN = "D\\{3}";
     private static int ENTITY_ATTRIBUTE_COUNT = 6;
 
     private String orderID;
-    private String customerID;
-    private String productID;
-    private int orderQuantity;
-    private String orderDate;
-    private String status;
+    private Customers customer;
+    private List<OrderLine> productList;
+    private Date orderDate;
+    private boolean status;
 
     public static String getAttributesHeader() {
         StringBuilder sb = new StringBuilder();
         sb.append("orderID");
-        sb.append(",").append("customerID");
-        sb.append(",").append("productID");
-        sb.append(",").append("orderQuantity");
-        sb.append(",").append("orderDate");
-        sb.append(",").append("status");
+        sb.append(Util.SEP).append("customerID");
+        sb.append(Util.SEP).append("productID");
+        sb.append(Util.SEP).append("orderQuantity");
+        sb.append(Util.SEP).append("orderDate");
+        sb.append(Util.SEP).append("status");
         return sb.toString();
     }
 
     public Orders() {
-    }
-
-    public Orders(String orderID, String customerID, String productID, int orderQuantity, String orderDate, String status) {
-        this.orderID = orderID;
-        this.customerID = customerID;
-        this.productID = productID;
-        this.orderQuantity = orderQuantity;
-        this.orderDate = orderDate;
-        this.status = status;
+        this.productList = new ArrayList();
     }
 
     public String getOrderID() {
@@ -54,282 +44,270 @@ public class Orders {
     }
 
     public void setOrderID(String orderID) {
-        if (orderID.matches(ID_Format)) {
+        if (Validation.checkOrderID(orderID)) {
             this.orderID = orderID;
+        } else {
+            System.err.println("Error");
         }
     }
 
-    public String getCustomerID() {
-        return customerID;
+    public Customers getCustomer() {
+        return customer;
     }
 
-    public void setCustomerID(String customerID) {
-        if (CustomersManagement.getInstance().getCustomersByID(customerID) != null) {
-            this.customerID = customerID;
+    public void setCustomer(Customers customer) {
+        this.customer = customer;
+    }
+
+    public List<OrderLine> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<OrderLine> productList) {
+        if (productList != null) {
+            this.productList.addAll(productList);
         }
     }
 
-    public String getProductID() {
-        return productID;
-    }
-
-    public void setProductID(String productID) {
-        if (ProductManagement.getInstance().getProductById(productID) != null) {
-            this.productID = productID;
-        }
-    }
-
-    public int getOrderQuantity() {
-        return orderQuantity;
-    }
-
-    public void setOrderQuantity(int orderQuantity) {
-        if (orderQuantity >= 0) {
-            this.orderQuantity = orderQuantity;
-        }
-    }
-
-    public String getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
-        if(orderDate.isEmpty()){
-            
+    public void setOrderDate(Date orderDate) {
+        if (/*Validate*/true) {
+            this.orderDate = orderDate;
         }
-        this.orderDate = orderDate;
     }
 
-    public String getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        if(status.equalsIgnoreCase("true") || status.equalsIgnoreCase("false"))
+    public void setStatus(boolean status) {
+        if (/*Validate*/true) {
             this.status = status;
-    }
-
-    public void input() {
-//        while (true) {
-//            try {
-//                setOrderID(Util.inputString("Input id with patern (" + Orders.ID_Format + ")", false));
-//                if (orderID == null) {
-//                    throw new Exception();
-//                }
-//                break;
-//            } catch (Exception ex) {
-//                Logger.getLogger(Customers.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-
-        this.customerID = Util.inputString("Enter the CustomerID: ", false);
-        if (CustomersManagement.getInstance().getCustomersByID(this.customerID) == null) {
-            System.out.println("CustomerID not found, add one.");
-
         }
-
-        this.productID = Util.inputString("Enter the productID: ", false);
-        if (ProductManagement.getInstance().getProductById(this.customerID) == null) {
-            System.out.println("V not found, add one.");
-        }
-
-        while (true) {
-            try {
-                setOrderQuantity(Util.inputInt("Enter orders quantity"));
-                break;
-            } catch (Exception ex) {
-                System.out.println("Name has length from 5 to 30 characters");
-            }
-        }
-
-        while (true) {
-            try {
-                setOrderDate(Util.inputString("Enter orders date(mm/dd/yyyy): ", false));
-                break;
-            } catch (Exception ex) {
-                System.out.println("the format must be mm/dd/yyyy");
-            }
-        }
-
-        while (true) {
-            try {
-                setOrderDate(Util.inputString("Enter orders status (success/pending) ", false));
-                break;
-            } catch (Exception ex) {
-                System.out.println("the status must be (success or pending)");
-            }
-        }
-
     }
 
     public static String inputId() {
         String id = null;
         do {
-            try {
-                id = Util.inputString("Input id with patern (" + Orders.ID_Format + ")", false);
-                throw new Exception();
-            } catch (Exception e) {
-                e.getMessage();
+            id = Util.inputString("Input id with patern (" + ID_FORMAT + ")", false);
+            if (!Validation.checkOrderID(id)) {
+                System.out.println("Error");
+            } else {
+                break;
             }
-        } while (!Util.validateStringPattern(id, Orders.ID_Pattern, true));
+        } while (true);
         return id;
+    }
+
+    public void input() {
+
+        // customerID
+        System.out.println("Customers List:");
+        CustomersService.getInstance().printAll();
+        do {
+            String customerID = Util.inputString("Input customer's id", false);
+            Customers customer = CustomersService.getInstance().getCustomerById(customerID);
+            if (customer != null) {
+                if (Validation.checkCustomerID(customer.getCustomerID())) {
+                    setCustomer(customer);
+                    break;
+                } else {
+                    System.out.println("Error");
+                }
+            } else {
+                System.out.println("Customer not found.");
+            }
+        } while (true);
+
+        // productList
+        System.out.println("Products List:");
+        ProductService.getInstance().PrintAll();
+        String productID = null;
+        do {
+            productID = Util.inputString("Input product's id", true);
+            if (productID.isBlank()) {
+                break;
+            }
+            if (ProductService.getInstance().getProductById(productID) != null) {
+                if (Validation.checkProductID(productID)) {
+                    int quantity = Util.inputInteger("Input order quantity", 0, Integer.MAX_VALUE);
+                    this.productList.add(new OrderLine(productID, quantity));
+                } else {
+                    System.out.println("Error");
+                }
+            } else {
+                System.out.println("Product not found.");
+            }
+        } while (!productID.isBlank() || this.productList.isEmpty());
+
+        // orderDate
+        do {
+            Date orderDate = Util.inputDate("Input order date", false);
+            if (Validation.validateDate(orderDate)) {
+                setOrderDate(orderDate);
+                break;
+            } else {
+                System.out.println("Error.");
+            }
+        } while (true);
+        // status
+        do {
+            boolean status = Util.inputBoolean("Input status (T/F)");
+            if (Validation.checkStatus(status)) {
+                setStatus(status);
+                break;
+            } else {
+                System.out.println("Error.");
+            }
+        } while (true);
+    }
+
+    public void update() {
+
+        System.out.println("Press ENTER to skip fields that don't need to be changed");
+
+        // orderID
+        do {
+            System.out.println("\nOld order ID: " + this.orderID);
+            String oID = Util.inputString("Enter the new order ID", true);
+            if (!oID.isEmpty()) {
+                if (Validation.checkOrderID(oID)) {
+                    setOrderID(oID);
+                    break;
+                } else {
+                    System.out.println("Error");
+                }
+            } else {
+                break;
+            }
+        } while (true);
+
+        // customerID
+        System.out.println("Customers List:");
+        CustomersService.getInstance().printAll();
+        System.out.println("Old Customer Name: " + this.customer.getCustomerName());
+        String customerID;
+        do {
+            customerID = Util.inputString("Input new customer's id", true);
+            if (!customerID.isEmpty()) {
+                Customers customer = CustomersService.getInstance().getCustomerById(customerID);
+                if (customer != null) {
+                    if (Validation.checkCustomerID(customer.getCustomerID())) {
+                        setCustomer(customer);
+                        break;
+                    } else {
+                        System.out.println("Error");
+                    }
+                } else {
+                    System.out.println("Customer not found.");
+                }
+
+            } else {
+                break;
+            }
+        } while (true);
+
+        // productList
+        System.out.println("Products List:");
+        ProductService.getInstance().PrintAll();
+        System.out.println("Old product list: ");
+        System.out.println(OrderService.getInstace().getAllOrderLine(productList));
+        for (OrderLine ord : productList) {
+            do {
+                System.out.println("Product: " + ord);
+                String isModify = Util.inputString("Modify or Remove", false);
+                if (isModify.trim().toUpperCase().startsWith("R")) {
+//                    productList.remove(ord);
+                    System.out.println("Removed");
+                    break;
+                }
+                String ID = Util.inputString("Enter the new product ID", true);
+                if (ID.isEmpty()) {
+                    break;
+                } else {
+                    if (!Validation.checkProductID(ID)) {
+                        System.out.println("Error");
+                        continue;
+                    } else {
+                        ord.setProductID(ID);
+                    }
+                }
+                String quantityString = Util.inputString("Enter the new quantity", true);
+                if (quantityString.isEmpty()) {
+                    break;
+                } else {
+                    int quantity = Integer.parseInt(quantityString);
+                    if (!Validation.checkOrderQuantity(quantity)) {
+                        System.out.println("Error");
+                    } else {
+                        ord.setOrderQuantity(quantity);
+                        break;
+                    }
+                }
+            } while (true);
+        }
+
+        // orderDate
+        do {
+            System.out.println("\nOld order date: " + Util.toString(this.orderDate));
+            Date date = Util.inputDate("Enter the new date", true);
+            if (!Util.toString(date).isEmpty()) {
+                if (Validation.validateDate(date)) {
+                    setOrderDate(date);
+                    break;
+                } else {
+                    System.out.println("Error");
+                }
+            } else {
+                break;
+            }
+        } while (true);
+
+        // status
+        do {
+            System.out.println("\nOld order status: " + this.status);
+            String status = Util.inputString("Enter the new status (T/F)", true);
+            if (!status.isEmpty()) {
+                if (status.trim().toUpperCase().startsWith("T") || status.trim().toUpperCase().startsWith("F")) {
+                    setStatus(status.trim().toUpperCase().startsWith("T"));
+                    break;
+                } else {
+                    System.out.println("Error");
+                }
+            } else {
+                break;
+            }
+        } while (true);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(orderID).append(",");
-        sb.append(customerID).append(",");
-        sb.append(productID).append(",");
-        sb.append(orderQuantity).append(",");
-        sb.append(orderDate).append(",");
-        sb.append(status).append(",");
-
-//        sb.append("Order{");
-//        sb.append("orderID=").append(orderID);
-//        sb.append(", customerID=").append(customerID);
-//        sb.append(", productID=").append(productID);
-//        sb.append(", orderQuantity=").append(orderQuantity);
-//        sb.append(", orderDate=").append(orderDate);
-//        sb.append(", status=").append(status);
-//        sb.append('}');
+        for (OrderLine orderLine : productList) {
+            sb.append(orderID);
+            sb.append(Util.SEP).append(customer.getCustomerID());
+            sb.append(Util.SEP).append(orderLine.getProductID());
+            sb.append(Util.SEP).append(orderLine.getOrderQuantity());
+            sb.append(Util.SEP).append(Util.toString(orderDate));
+            sb.append(Util.SEP).append(status);
+            sb.append("\n");
+        }
         return sb.toString();
     }
 
     public void parseOrders(String entityString) throws Exception {
-        // can check so luong attribute  (id, name, price, quantity, publisherId, status)
         if (entityString != null) {
-            String[] attributes = entityString.split(",", -1);
+            String[] attributes = entityString.split(Util.SEP, -1);
             if (attributes.length >= Orders.ENTITY_ATTRIBUTE_COUNT) {
-
                 setOrderID(attributes[0]);
-                setCustomerID(attributes[1]);
-                setProductID(attributes[2]);
-                try {
-                    setOrderQuantity(Integer.parseInt(attributes[3]));
-                } catch (NumberFormatException ex) {
-                    System.out.println(">>>>> Err: " + ex.getMessage());
-                }
-                setOrderDate(attributes[4]);
-                setStatus(attributes[5]);
+                setCustomer(CustomersService.getInstance().getCustomerById(attributes[1]));
+                productList.add(new OrderLine(attributes[2], Integer.parseInt(attributes[3].trim())));
+                setOrderDate(Util.toDate(attributes[4]));
+                setStatus(Boolean.parseBoolean(attributes[5]));
             }
         }
     }
-
-    public void inputUpdate() {
-        boolean cont = false;
-        do {
-            String newCustomerID = Util.inputString("Input new CustomerID: ", true);
-            if (newCustomerID.equals("")) {
-            } else {
-                if (CustomersManagement.getInstance().getCustomersByID(newCustomerID) == null) {
-                    cont = true;
-                }
-                setCustomerID(newCustomerID);
-            }
-        } while (cont);
-
-        do {
-            String newProductID = Util.inputString("Input new ProductID:", true);
-            if (newProductID.equals("")) {
-            } else {
-                if (ProductManagement.getInstance().getProductById(newProductID) == null) {
-                    cont = true;
-                }
-                setProductID(newProductID);
-            }
-        } while (cont);
-
-        do {
-            String newOrdersQuantity = Util.inputString("Input new ordersQuantity:", true);
-            if (newOrdersQuantity.equals("")) {
-            } else {
-                if (utils.OrderValidation.checOrdersQuantity(Integer.parseInt(newOrdersQuantity)) == false) {
-                    cont = true;
-                }
-                setOrderQuantity(Integer.parseInt(newOrdersQuantity));
-            }
-        } while (cont);
-
-        do {
-            String newOrderDate = Util.inputString("Input new newOrderDate(mm/dd/yyyy):", false);
-            if (newOrderDate.equals("")) {
-
-            } else {
-                if (utils.OrderValidation.checkOrderDate(newOrderDate) == false) {
-                    cont = true;
-                }
-                setOrderDate(newOrderDate);
-            }
-        } while (cont);
-
-        do {
-            String newOrdersStatus = Util.inputString("Input new ordersQuantity:", true);
-            if (newOrdersStatus.equals("")) {
-            } else {
-                if (utils.OrderValidation.checkOrdersStatus(newOrdersStatus) == false) {
-                    cont = true;
-                }
-                setStatus(newOrdersStatus);
-            }
-        } while (cont);
-    }
-
-//     public void input() {
-//        while (true) {
-//            try {
-//                setCustomerID(Util.inputString("Input id with patern (" + Orders.ID_Format + ")", false));
-//                break;
-//            } catch (Exception ex) {
-//                Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//
-//        while (true) {
-//            try {
-//                this.customerID = Util.inputString("Enter customers Id", false);
-//                if(CustomersManagement.getInstance().getCustomerById(this.customerID) == null){
-//                    System.out.println("Customer not found in db");
-//                    break;
-//                }
-//                break;
-//            } catch (Exception ex) {
-//                System.out.println("Name has length from 5 to 30 characters");
-//            }
-//        }
-//        while (true) {
-//            try {
-//                setPrice(Util.inputDouble("Input price", 0));
-//                break;
-//            } catch (BException ex) {
-//                System.out.println("Price must greater than 0");
-//            }
-//        }
-//
-//        while (true) {
-//            try {
-//                setQuantity(Util.inputInt("Input quantity", 0));
-//                break;
-//            } catch (BException ex) {
-//                System.out.println("Quantity must greater than 0");
-//            }
-//        }
-//
-//        while (true) {
-//            try {
-//                setStatus(Util.inputString("Enter status (Available or Not AVailable)", true));
-//                break;
-//            } catch (BException e) {
-//                System.out.println("Status must be \"Available\" or \"Not AVailable\"");
-//            }
-//        }
-//
-//        this.publisherId = Util.inputString("Input publisher's id", false);
-//        if (PublisherManagement.getInstance().getPublisherById(this.publisherId) == null) {
-//            System.out.println("Publisher not found, add one.");
-//        }
-//
-//    }
-
-
 }
