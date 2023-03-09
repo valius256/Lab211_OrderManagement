@@ -4,10 +4,6 @@ import dataservice.IDatabaseService;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Minh Tri
- */
 public abstract class DataManagement<E> {
 
     protected List<E> entityList;
