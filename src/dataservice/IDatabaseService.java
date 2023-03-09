@@ -2,10 +2,7 @@ package dataservice;
 
 import java.util.List;
 
-/**
- *
- * @author Minh Tri
- */
+
 public interface IDatabaseService {
 
     List<String> loadData();
